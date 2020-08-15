@@ -5,23 +5,25 @@ services:
       context: .
       dockerfile: ./Dockerfile
     environment:
-      - MYSQL_HOST=127.0.0.1
+      - MYSQL_HOST=10.5.0.6
       - MYSQL_USER=pwnuser
       - MYSQL_PASSWORD=pwnpass1337)(
       - MYSQL_DB=pwn
     volumes:
       - ./app:/var/www/html/
     ports:
-      - "7337:80"
+      - "127.0.0.1:7337:80"
     container_name: pwnthis_www
+    links:
+      - db
     depends_on:
       - db
-    networks: 
-      - default
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.5
   db:
     image: mysql:5.7
     restart: always
-    command: [--default-authentication-plugin=mysql_native_password]
     environment:
       - MYSQL_ROOT_PASSWORD=rootpass1337()
       - MYSQL_USER=pwnuser
@@ -32,8 +34,15 @@ services:
       - ./dump:/docker-entrypoint-initdb.d
       - persistent:/var/lib/mysql
     ports: 
-      - '3306:3306'
-    networks: 
-      - default
+      - '127.0.0.1:3306:3306'
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.6
 volumes:
   persistent:
+networks:
+  vpcbr:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.5.0.0/16
