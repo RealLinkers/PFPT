@@ -1,9 +1,9 @@
 # Setup guide
 
 ### Run with Docker
-cd PFPT/01
-docker-compose up
-Webserver will be located on http://localhost:7337
+cd PFPT/01  
+docker-compose up  
+Webserver will be located on http://localhost:7337  
 
 # Vulnerabilities present
 
