@@ -2,7 +2,7 @@
 
 ### Run with Docker
 cd PFPT/01  
-chmod 777 uploads/
+mkdir uploads && chmod 777 uploads/  && cd ../  
 docker-compose up  
 Webserver will be located on http://localhost:7337  
 
